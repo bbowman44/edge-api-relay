@@ -88,7 +88,7 @@ export default {
 
 		const slots = ((await env.CACHE.get(SLOTS_KEY, 'json')) ?? {}) as Slots;
 
-		// /slots/wow returns just that slot, for a client that wants one value.
+		// /slots/wow returns just that slot, for a client that wants one value. This also can match any object that exists in the slots variable such as a weather object (/slots/weather) and returns it json formatted.
 		const match = url.pathname.match(/^\/slots\/([a-z0-9_-]+)$/i);
 		if (match) {
 			const slot = slots[match[1]];

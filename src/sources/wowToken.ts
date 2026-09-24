@@ -52,7 +52,9 @@ async function getAccessToken(env: {
 		throw new Error(`Blizzard OAuth failed: ${res.status} ${await res.text()}`);
 	}
 
-	const body = (await res.json()) as OAuthRe
+	const body = (await res.json()) as OAuthResponse;
+
+	// Expire our copy a minute early so we never present a token mid-rotation.
 	await env.CACHE.put(ACCESS_TOKEN_KEY, body.access_token, {
 		expirationTtl: Math.max(60, body.expires_in - 60),
 	});
